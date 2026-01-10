@@ -2,7 +2,7 @@ namespace SaldoHomework.Domain
 {
     public class VirtualFileSystem
     {
-        public VirtualFolder Root { get; }
+        public VirtualFolder Root { get; private set; } = null!;
 
         public VirtualFileSystem()
         {

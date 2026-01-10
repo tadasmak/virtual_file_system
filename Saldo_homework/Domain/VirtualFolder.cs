@@ -4,15 +4,15 @@ namespace SaldoHomework.Domain
 {
     public class VirtualFolder
     {
-        public string Name { get; }
-        public Dictionary<string, VirtualFolder> Subfolders { get; }
-        public Dictionary<string, VirtualFile> Files { get; }
+        public string Name { get; private set; } = "";
+        public Dictionary<string, VirtualFolder> Subfolders { get; private set; } = new();
+        public Dictionary<string, VirtualFile> Files { get; private set; } = new();
+
+        public VirtualFolder() { } // REQUIRED for JSON
 
         public VirtualFolder(string name)
         {
             Name = name;
-            Subfolders = new Dictionary<string, VirtualFolder>();
-            Files = new Dictionary<string, VirtualFile>();
         }
 
         public void AddFolder(string name)

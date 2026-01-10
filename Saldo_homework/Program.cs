@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Text.Json;
 using SaldoHomework.Domain;
 
 class Program
 {
+    const string SaveFile = "vfs.json";
+
     static void Main(string[] args)
     {
-        var vfs = new VirtualFileSystem();
-        Console.WriteLine("Virtual File System CLI.");
+        var vfs = LoadVFS();
+
+        Console.WriteLine("Virtual File System CLI. Type 'help' for commands.");
 
         while (true)
         {
@@ -43,6 +47,7 @@ class Program
                         break;
 
                     case "exit":
+                        SaveVFS(vfs);
                         return;
 
                     case "createdir":
@@ -208,5 +213,30 @@ class Program
         var folderPath = argsSplit[1];
 
         return (sourcePath, folderPath);
+    }
+
+    static VirtualFileSystem LoadVFS()
+    {
+        if (!File.Exists(SaveFile))
+        {
+            return new VirtualFileSystem();
+        }
+        
+        try
+        {
+            var json = File.ReadAllText(SaveFile);
+            return JsonSerializer.Deserialize<VirtualFileSystem>(json) ?? new VirtualFileSystem();
+        }
+        catch
+        {
+            Console.WriteLine("Warning: Failed to load saved VFS. Starting fresh.");
+            return new VirtualFileSystem();
+        }
+    }
+
+    static void SaveVFS(VirtualFileSystem vfs)
+    {
+        var json = JsonSerializer.Serialize(vfs, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(SaveFile, json);
     }
 }
