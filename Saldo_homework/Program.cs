@@ -27,7 +27,7 @@ class Program
                 switch (command)
                 {
                     case "help":
-                        Console.WriteLine("Commands: mkdir <path>, ls <path>, tree, exit");
+                        Console.WriteLine("Commands: createdir <path>, list <path>, tree, exit");
                         break;
 
                     case "exit":
@@ -61,7 +61,25 @@ class Program
 
     static void HandleMakeDirectory(VirtualFileSystem vfs, string path)
     {
+        var parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 0)
+        {
+            Console.WriteLine("Invalid path");
+            return;
+        }
 
+        var current = vfs.Root;
+        for (int i = 0; i < parts.Length; i++)
+        {
+            var part = parts[i];
+            if (!current.Subfolders.ContainsKey(part))
+            {
+                current.AddFolder(part);
+            }
+            current = current.Subfolders[part];
+        }
+
+        Console.WriteLine($"Folder '{path}' created.");
     }
 
     static void HandleList(VirtualFileSystem vfs, string path)
