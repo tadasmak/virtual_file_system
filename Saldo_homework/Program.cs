@@ -44,7 +44,7 @@ class Program
                         break;
 
                     case "tree":
-                        PrintTree(vfs.Root);
+                        PrintTree(vfs.Root, "");
                         break;
 
                     default:
@@ -98,8 +98,18 @@ class Program
         }
     }
 
-    static void PrintTree(VirtualFolder folder)
+    static void PrintTree(VirtualFolder folder, string indent)
     {
+        Console.WriteLine($"{indent}{folder.Name}/");
 
+        foreach (var sub in folder.Subfolders.Values)
+        {
+            PrintTree(sub, indent + "  ");
+        }
+
+        foreach (var file in folder.Files.Values)
+        {
+            Console.WriteLine($"{indent}  {file.Name}");
+        }
     }
 }
