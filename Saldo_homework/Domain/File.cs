@@ -1,11 +1,11 @@
 namespace SaldoHomework.Domain
 {
-    public class File
+    public class VirtualFile
     {
         public string Name { get; }
         public string SourcePath { get; }
 
-        public File(string name, string sourcePath)
+        public VirtualFile(string name, string sourcePath)
         {
             Name = name;
             SourcePath = sourcePath;
