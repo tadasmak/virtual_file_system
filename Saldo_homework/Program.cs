@@ -62,8 +62,7 @@ class Program
                         break;
 
                     case "list":
-                        var listPath = string.IsNullOrEmpty(argument) ? "/" : argument;
-                        HandleList(vfs, listPath);
+                        HandleList(vfs, argument);
                         break;
 
                     case "tree":
@@ -107,7 +106,25 @@ class Program
 
     static void HandleRemoveDirectory(VirtualFileSystem vfs, string path)
     {
+        if (string.IsNullOrWhiteSpace(path) || path == "/")
+        {
+            Console.WriteLine("Cannot remove root or empty path.");
+            return;
+        }
 
+        var parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        var folderName = parts[^1];
+        var parentPath = string.Join("/", parts, 0, parts.Length - 1);
+        var parent = string.IsNullOrEmpty(parentPath) ? vfs.Root : vfs.GetFolder("/" + parentPath);
+
+        if (!parent.Subfolders.ContainsKey(folderName))
+        {
+            Console.WriteLine($"Folder '{folderName}' does not exist.");
+            return;
+        }
+
+        parent.Subfolders.Remove(folderName);
+        Console.WriteLine($"Folder '{path}' removed.");
     }
 
     static void HandleList(VirtualFileSystem vfs, string path)
