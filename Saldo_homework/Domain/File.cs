@@ -1,11 +1,14 @@
-public class File
+namespace SaldoHomework.Domain
 {
-    public string Name { get; }
-    public string SourcePath { get; }
-    
-    public File(string name, string sourcePath)
+    public class File
     {
-        Name = name;
-        SourcePath = sourcePath;
+        public string Name { get; }
+        public string SourcePath { get; }
+
+        public File(string name, string sourcePath)
+        {
+            Name = name;
+            SourcePath = sourcePath;
+        }
     }
 }

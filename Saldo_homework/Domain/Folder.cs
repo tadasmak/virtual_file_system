@@ -1,33 +1,38 @@
-public class VirtualFolder
+using System.Collections.Generic;
+
+namespace SaldoHomework.Domain
 {
-    public string Name { get; }
-    public Dictionary<string, VirtualFolder> Subfolders { get; }
-    public Dictionary<string, VirtualFile> Files { get; }
-
-    public VirtualFolder(string name)
+    public class VirtualFolder
     {
-        Name = name;
-        Subfolders = new Dictionary<string, VirtualFolder>();
-        Files = new Dictionary<string, VirtualFile>();
-    }
+        public string Name { get; }
+        public Dictionary<string, VirtualFolder> Subfolders { get; }
+        public Dictionary<string, VirtualFile> Files { get; }
 
-    public void AddFolder(string name)
-    {
-        if (Subfolders.ContainsKey(name))
+        public VirtualFolder(string name)
         {
-            throw new InvalidOperationException("Folder already exists");
+            Name = name;
+            Subfolders = new Dictionary<string, VirtualFolder>();
+            Files = new Dictionary<string, VirtualFile>();
         }
 
-        Subfolders[name] = new VirtualFolder(name);
-    }
-
-    public void AddFile(VirtualFile file)
-    {
-        if (Files.ContainsKey(file.Name))
+        public void AddFolder(string name)
         {
-            throw new InvalidOperationException("File already exists");
+            if (Subfolders.ContainsKey(name))
+            {
+                throw new InvalidOperationException("Folder already exists");
+            }
+
+            Subfolders[name] = new VirtualFolder(name);
         }
 
-        Files[file.name] = file;
+        public void AddFile(VirtualFile file)
+        {
+            if (Files.ContainsKey(file.Name))
+            {
+                throw new InvalidOperationException("File already exists");
+            }
+
+            Files[file.name] = file;
+        }
     }
 }
