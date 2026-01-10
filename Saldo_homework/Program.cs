@@ -4,7 +4,12 @@ using SaldoHomework.Domain;
 
 class Program
 {
-    static readonly string SaveFile = Path.Combine(AppContext.BaseDirectory, "vfs.json");
+    static readonly string SaveFile =
+        Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "SaldoHomework",
+            "vfs.json"
+        );
 
     static void Main(string[] args)
     {
@@ -189,15 +194,16 @@ class Program
     static void HandleRemoveFile(VirtualFileSystem vfs, string sourcePath, string folderPath)
     {
         var folder = vfs.GetFolder(folderPath);
+        var fileName = Path.GetFileName(sourcePath);
 
-        if (!folder.Files.ContainsKey(sourcePath))
+        if (!folder.Files.ContainsKey(fileName))
         {
-            Console.WriteLine($"File '{sourcePath}' does not exist in '{folderPath}'.");
+            Console.WriteLine($"File '{fileName}' does not exist in '{folderPath}'.");
             return;
         }
 
-        folder.Files.Remove(sourcePath);
-        Console.WriteLine($"File '{sourcePath}' removed from '{folderPath}'.");
+        folder.Files.Remove(fileName);
+        Console.WriteLine($"File '{fileName}' removed from '{folderPath}'.");
     }
 
     static (string sourcePath, string folderPath)? SplitSourceAndFolderPaths(string argument, string command)
@@ -227,15 +233,18 @@ class Program
             var json = File.ReadAllText(SaveFile);
             return JsonSerializer.Deserialize<VirtualFileSystem>(json) ?? new VirtualFileSystem();
         }
-        catch
+        catch (JsonException exception)
         {
-            Console.WriteLine("Warning: Failed to load saved VFS. Starting fresh.");
+            Console.WriteLine($"Warning: Failed to load saved VFS ({exception.Message}). Starting fresh.");
             return new VirtualFileSystem();
         }
     }
 
     static void SaveVFS(VirtualFileSystem vfs)
     {
+        var dir = Path.GetDirectoryName(SaveFile)!;
+        Directory.CreateDirectory(dir); // ensures folder exists
+
         var json = JsonSerializer.Serialize(vfs, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(SaveFile, json);
     }

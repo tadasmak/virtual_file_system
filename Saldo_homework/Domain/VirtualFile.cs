@@ -1,9 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace SaldoHomework.Domain
 {
     public class VirtualFile
     {
-        public string Name { get; private set; } = "";
-        public string SourcePath { get; private set; } = "";
+        [JsonInclude] public string Name { get; private set; } = "";
+        [JsonInclude] public string SourcePath { get; private set; } = "";
 
         public VirtualFile() { }
 

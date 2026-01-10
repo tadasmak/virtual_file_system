@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SaldoHomework.Domain
 {
     public class VirtualFolder
     {
-        public string Name { get; private set; } = "";
-        public Dictionary<string, VirtualFolder> Subfolders { get; private set; } = new();
-        public Dictionary<string, VirtualFile> Files { get; private set; } = new();
+        [JsonInclude] public string Name { get; private set; } = "";
+        [JsonInclude] public Dictionary<string, VirtualFolder> Subfolders { get; private set; } = new();
+        [JsonInclude] public Dictionary<string, VirtualFile> Files { get; private set; } = new();
 
         public VirtualFolder() { } // REQUIRED for JSON
 
