@@ -26,6 +26,9 @@ class Program
             {
                 switch (command)
                 {
+                    case "help":
+                        Console.WriteLine("Commands: mkdir <path>, ls <path>, tree, exit");
+                        break;
                     case "exit":
                         return;
                 }
