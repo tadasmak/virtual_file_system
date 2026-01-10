@@ -128,6 +128,24 @@ class Program
 
     static void HandleAddFile(VirtualFileSystem vfs, string sourcePath, string folderPath)
     {
-        Console.WriteLine($"Adding: /{folderPath}/{sourcePath}");
+        if (!File.Exists(sourcePath))
+        {
+            Console.WriteLine($"Source file '{sourcePath}' does not exist.");
+            return;
+        }
+
+        var folder = vfs.GetFolder(folderPath);
+        var fileName = Path.GetFileName(sourcePath);
+        var file = new VirtualFile(fileName, sourcePath);
+
+        try
+        {
+            folder.AddFile(file);
+            Console.WriteLine($"File '{fileName}' added to '{folderPath}'.");
+        }
+        catch (InvalidOperationException)
+        {
+            Console.WriteLine($"File '{fileName}' already exists in '{folderPath}'.");
+        }
     }
 }
