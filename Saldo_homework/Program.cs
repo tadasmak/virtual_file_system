@@ -31,6 +31,9 @@ class Program
                         break;
                     case "exit":
                         return;
+                    default:
+                        Console.WriteLine("Unknown command. Type 'help' for help.");
+                        break;
                 }
             }
             catch (Exception exception)
