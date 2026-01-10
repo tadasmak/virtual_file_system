@@ -22,6 +22,18 @@ class Program
             var command = parts[0].ToLower();
             var argument = parts.Length > 1 ? parts[1] : "";
 
+            string? sourcePath = null;
+            string? folderPath = null;
+
+            if (command == "addfile" || command == "removefile")
+            {
+                var result = SplitSourceAndFolderPaths(argument, command);
+                if (result == null) continue;
+
+                sourcePath = result.Value.sourcePath;
+                folderPath = result.Value.folderPath;
+            }
+
             try
             {
                 switch (command)
@@ -34,21 +46,11 @@ class Program
                         return;
 
                     case "createdir":
-                        var dirPath = argument;
-                        HandleMakeDirectory(vfs, dirPath);
+                        HandleMakeDirectory(vfs, argument);
                         break;
 
                     case "addfile":
-                        var argsSplit = argument.Split(' ', 2);
-                        if (argsSplit.Length != 2)
-                        {
-                            Console.WriteLine("Usage: addfile <sourcePath> <virtualFolderPath>");
-                            break;
-                        }
-
-                        var sourcePath = argsSplit[0];
-                        var folderPath = argsSplit[1];
-                        HandleAddFile(vfs, sourcePath, folderPath);
+                        HandleAddFile(vfs, sourcePath!, folderPath!);
                         break;
 
                     case "list":
@@ -147,5 +149,20 @@ class Program
         {
             Console.WriteLine($"File '{fileName}' already exists in '{folderPath}'.");
         }
+    }
+
+    static (string sourcePath, string folderPath)? SplitSourceAndFolderPaths(string argument, string command)
+    {
+        var argsSplit = argument.Split(' ', 2);
+        if (argsSplit.Length != 2)
+        {
+            Console.WriteLine($"Usage: {command} <sourcePath> <virtualFolderPath>");
+            return null;
+        }
+
+        var sourcePath = argsSplit[0];
+        var folderPath = argsSplit[1];
+
+        return (sourcePath, folderPath);
     }
 }
