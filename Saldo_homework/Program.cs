@@ -84,7 +84,18 @@ class Program
 
     static void HandleList(VirtualFileSystem vfs, string path)
     {
+        var folder = vfs.GetFolder(path);
+        Console.WriteLine("Folders:");
+        foreach(var sub in folder.Subfolders.Keys)
+        {
+            Console.WriteLine($" {sub}");
+        }
 
+        Console.WriteLine("Files:");
+        foreach (var file in folder.Files.Keys)
+        {
+            Console.WriteLine($"  {file}");
+        }
     }
 
     static void PrintTree(VirtualFolder folder)
