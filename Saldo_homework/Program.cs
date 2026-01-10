@@ -4,7 +4,7 @@ using SaldoHomework.Domain;
 
 class Program
 {
-    const string SaveFile = "vfs.json";
+    static readonly string SaveFile = Path.Combine(AppContext.BaseDirectory, "vfs.json");
 
     static void Main(string[] args)
     {
@@ -43,7 +43,7 @@ class Program
                 switch (command)
                 {
                     case "help":
-                        Console.WriteLine("Commands: createdir <path>, list <path>, tree, exit");
+                        Console.WriteLine("Commands: createdir <path>, removedir <path>, addfile <sourcePath> <folderPath>, removefile <sourcePath> <folderPath>, list <path>, tree, exit");
                         break;
 
                     case "exit":
