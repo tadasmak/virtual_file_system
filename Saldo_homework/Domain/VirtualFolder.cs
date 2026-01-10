@@ -32,7 +32,7 @@ namespace SaldoHomework.Domain
                 throw new InvalidOperationException("File already exists");
             }
 
-            Files[file.name] = file;
+            Files[file.Name] = file;
         }
     }
 }
