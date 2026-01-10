@@ -29,8 +29,24 @@ class Program
                     case "help":
                         Console.WriteLine("Commands: mkdir <path>, ls <path>, tree, exit");
                         break;
+
                     case "exit":
                         return;
+
+                    case "createdir":
+                        var folderPath = argument;
+                        HandleMakeDirectory(vfs, folderPath);
+                        break;
+
+                    case "list":
+                        var listPath = string.IsNullOrEmpty(argument) ? "/" : argument;
+                        HandleList(vfs, listPath);
+                        break;
+
+                    case "tree":
+                        PrintTree(vfs.Root);
+                        break;
+
                     default:
                         Console.WriteLine("Unknown command. Type 'help' for help.");
                         break;
@@ -41,5 +57,20 @@ class Program
                 Console.WriteLine($"Error: {exception.Message}");
             }
         }
+    }
+
+    static void HandleMakeDirectory(VirtualFileSystem vfs, string path)
+    {
+
+    }
+
+    static void HandleList(VirtualFileSystem vfs, string path)
+    {
+
+    }
+
+    static void PrintTree(VirtualFolder folder)
+    {
+
     }
 }
