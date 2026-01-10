@@ -49,6 +49,10 @@ class Program
                         HandleMakeDirectory(vfs, argument);
                         break;
 
+                    case "removedir":
+                        HandleRemoveDirectory(vfs, argument);
+                        break;
+
                     case "addfile":
                         HandleAddFile(vfs, sourcePath!, folderPath!);
                         break;
@@ -99,6 +103,11 @@ class Program
         }
 
         Console.WriteLine($"Folder '{path}' created.");
+    }
+
+    static void HandleRemoveDirectory(VirtualFileSystem vfs, string path)
+    {
+
     }
 
     static void HandleList(VirtualFileSystem vfs, string path)
