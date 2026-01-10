@@ -34,8 +34,21 @@ class Program
                         return;
 
                     case "createdir":
-                        var folderPath = argument;
-                        HandleMakeDirectory(vfs, folderPath);
+                        var dirPath = argument;
+                        HandleMakeDirectory(vfs, dirPath);
+                        break;
+
+                    case "addfile":
+                        var argsSplit = argument.Split(' ', 2);
+                        if (argsSplit.Length != 2)
+                        {
+                            Console.WriteLine("Usage: addfile <sourcePath> <virtualFolderPath>");
+                            break;
+                        }
+
+                        var sourcePath = argsSplit[0];
+                        var folderPath = argsSplit[1];
+                        HandleAddFile(vfs, sourcePath, folderPath);
                         break;
 
                     case "list":
@@ -111,5 +124,10 @@ class Program
         {
             Console.WriteLine($"{indent}  {file.Name}");
         }
+    }
+
+    static void HandleAddFile(VirtualFileSystem vfs, string sourcePath, string folderPath)
+    {
+        Console.WriteLine($"Adding: /{folderPath}/{sourcePath}");
     }
 }
