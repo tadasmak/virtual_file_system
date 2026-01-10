@@ -53,6 +53,10 @@ class Program
                         HandleAddFile(vfs, sourcePath!, folderPath!);
                         break;
 
+                    case "removefile":
+                        HandleRemoveFile(vfs, sourcePath!, folderPath!);
+                        break;
+
                     case "list":
                         var listPath = string.IsNullOrEmpty(argument) ? "/" : argument;
                         HandleList(vfs, listPath);
@@ -149,6 +153,11 @@ class Program
         {
             Console.WriteLine($"File '{fileName}' already exists in '{folderPath}'.");
         }
+    }
+
+    static void HandleRemoveFile(VirtualFileSystem vfs, string sourcePath, string folderPath)
+    {
+        
     }
 
     static (string sourcePath, string folderPath)? SplitSourceAndFolderPaths(string argument, string command)
