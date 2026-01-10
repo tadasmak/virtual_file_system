@@ -157,7 +157,16 @@ class Program
 
     static void HandleRemoveFile(VirtualFileSystem vfs, string sourcePath, string folderPath)
     {
-        
+        var folder = vfs.GetFolder(folderPath);
+
+        if (!folder.Files.ContainsKey(sourcePath))
+        {
+            Console.WriteLine($"File '{sourcePath}' does not exist in '{folderPath}'.");
+            return;
+        }
+
+        folder.Files.Remove(sourcePath);
+        Console.WriteLine($"File '{sourcePath}' removed from '{folderPath}'.");
     }
 
     static (string sourcePath, string folderPath)? SplitSourceAndFolderPaths(string argument, string command)
