@@ -36,5 +36,16 @@ namespace SaldoHomework.Tests
             Assert.True(folder.Files.ContainsKey("test.txt"));
             Assert.Equal(file, folder.Files["test.txt"]);
         }
+
+        [Fact]
+        public void AddFile_DuplicateNameThrowsException()
+        {
+            var folder = new VirtualFolder("root");
+            var file1 = new VirtualFile("test.txt", "/source1/test.txt");
+            var file2 = new VirtualFile("test.txt", "/source2/test.txt");
+            folder.AddFile(file1);
+
+            Assert.Throws<InvalidOperationException>(() => folder.AddFile(file2));
+        }
     }
 }
