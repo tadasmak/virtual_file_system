@@ -6,7 +6,7 @@ namespace SaldoHomework.Tests
     public class VirtualFolderTests
     {
         [Fact]
-        public void AddFolder_NewFolderAddsSuccessfully()
+        public void AddFolder_NewFolder_AddsSuccessfully()
         {
             var folder = new VirtualFolder("root");
 
@@ -17,7 +17,7 @@ namespace SaldoHomework.Tests
         }
 
         [Fact]
-        public void AddFolder_DuplicateNameThrowsException()
+        public void AddFolder_DuplicateName_ThrowsException()
         {
             var folder = new VirtualFolder("root");
             folder.AddFolder("subfolder");
@@ -26,7 +26,7 @@ namespace SaldoHomework.Tests
         }
 
         [Fact]
-        public void AddFile_NewFileAddsSuccessfully()
+        public void AddFile_NewFile_AddsSuccessfully()
         {
             var folder = new VirtualFolder("root");
             var file = new VirtualFile("test.txt", "/source/test.txt");
@@ -38,7 +38,7 @@ namespace SaldoHomework.Tests
         }
 
         [Fact]
-        public void AddFile_DuplicateNameThrowsException()
+        public void AddFile_DuplicateName_ThrowsException()
         {
             var folder = new VirtualFolder("root");
             var file1 = new VirtualFile("test.txt", "/source1/test.txt");

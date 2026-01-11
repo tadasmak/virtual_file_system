@@ -6,7 +6,7 @@ namespace SaldoHomework.Tests
     public class VirtualFileTests
     {
         [Fact]
-        public void ConstructorSetsProperties()
+        public void Constructor_SetsProperties()
         {
             var file = new VirtualFile("document.txt", "/path/to/document.txt");
 
