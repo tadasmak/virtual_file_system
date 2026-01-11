@@ -6,7 +6,7 @@ namespace SaldoHomework.Tests
     public class VirtualFolderTests
     {
         [Fact]
-        public void AddFolderNewFolderAddsSuccessfully()
+        public void AddFolder_NewFolderAddsSuccessfully()
         {
             var folder = new VirtualFolder("root");
 
@@ -14,6 +14,15 @@ namespace SaldoHomework.Tests
 
             Assert.True(folder.Subfolders.ContainsKey("subfolder"));
             Assert.Equal("subfolder", folder.Subfolders["subfolder"].Name);
+        }
+
+        [Fact]
+        public void AddFolder_DuplicateNameThrowsException()
+        {
+            var folder = new VirtualFolder("root");
+            folder.AddFolder("subfolder");
+
+            Assert.Throws<InvalidOperationException>(() => folder.AddFolder("subfolder"));
         }
     }
 }
