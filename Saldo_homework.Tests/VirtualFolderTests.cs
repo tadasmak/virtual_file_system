@@ -24,5 +24,17 @@ namespace SaldoHomework.Tests
 
             Assert.Throws<InvalidOperationException>(() => folder.AddFolder("subfolder"));
         }
+
+        [Fact]
+        public void AddFile_NewFileAddsSuccessfully()
+        {
+            var folder = new VirtualFolder("root");
+            var file = new VirtualFile("test.txt", "/source/test.txt");
+
+            folder.AddFile(file);
+
+            Assert.True(folder.Files.ContainsKey("test.txt"));
+            Assert.Equal(file, folder.Files["test.txt"]);
+        }
     }
 }
